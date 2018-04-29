@@ -21,10 +21,8 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.View
-import android.widget.TextView
-
 import com.example.android.codelabs.lifecycle.R
+import kotlinx.android.synthetic.main.chrono_activity_3.*
 
 
 class ChronoActivity3 : AppCompatActivity() {
@@ -43,12 +41,12 @@ class ChronoActivity3 : AppCompatActivity() {
 
     private fun subscribe() {
         val elapsedTimeObserver = Observer<Long> { aLong ->
-            val newText = this@ChronoActivity3.resources.getString(
-                    R.string.seconds, aLong)
-            (findViewById<View>(R.id.timer_textview) as TextView).text = newText
+            val newText = getString(R.string.seconds, aLong)
+            timer_textview.text = newText
             Log.d("ChronoActivity3", "Updating timer")
         }
 
         //TODO: observe the ViewModel's elapsed time
+        mLiveDataTimerViewModel!!.elapsedTime.observe(this, elapsedTimeObserver)
     }
 }

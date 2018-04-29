@@ -31,14 +31,13 @@ class LiveDataTimerViewModel : ViewModel() {
 
     private val mElapsedTime = MutableLiveData<Long>()
 
-    private val mInitialTime: Long
+    private val mInitialTime: Long = SystemClock.elapsedRealtime()
 
     // Will be used when step is completed
     val elapsedTime: LiveData<Long>
         get() = mElapsedTime
 
     init {
-        mInitialTime = SystemClock.elapsedRealtime()
         val timer = Timer()
 
         // Update the elapsed time every second.
@@ -48,6 +47,7 @@ class LiveDataTimerViewModel : ViewModel() {
 
                 // setValue() cannot be called from a background thread so post to main thread.
                 //TODO post the new value with LiveData.postValue()
+                mElapsedTime.postValue(newValue)
             }
         }, ONE_SECOND.toLong(), ONE_SECOND.toLong())
 
@@ -55,6 +55,6 @@ class LiveDataTimerViewModel : ViewModel() {
 
     companion object {
 
-        private val ONE_SECOND = 1000
+        private const val ONE_SECOND = 1000
     }
 }
