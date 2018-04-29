@@ -22,9 +22,9 @@ buildscript {
         runnerVersion = "1.0.1"
         rulesVersion = "1.0.1"
         espressoVersion = "3.0.1"
-        archLifecycleVersion = "1.0.0"
+        archLifecycleVersion = "1.1.1"
         archRoomVersion = "1.0.0"
-        kotlinVersion = "1.2.40"
+        kotlinVersion = "1.2.41"
     }
     repositories {
         google()
