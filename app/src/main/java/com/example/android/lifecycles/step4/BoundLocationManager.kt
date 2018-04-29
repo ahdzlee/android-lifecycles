@@ -16,8 +16,10 @@
 
 package com.example.android.lifecycles.step4
 
+import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.LifecycleOwner
+import android.arch.lifecycle.OnLifecycleEvent
 import android.content.Context
 import android.location.Location
 import android.location.LocationListener
@@ -33,11 +35,17 @@ object BoundLocationManager {
 
     @SuppressWarnings("MissingPermission")
     internal class BoundLocationListener(lifecycleOwner: LifecycleOwner,
-                                         private val mListener: LocationListener, private val mContext: Context)//TODO: Add lifecycle observer
-        : LifecycleObserver {
+                                         private val mListener: LocationListener,
+                                         private val mContext: Context) : LifecycleObserver {
         private var mLocationManager: LocationManager? = null
 
+        init {
+            // This class observes the activity's lifecycle, hence we add it as an observer
+            lifecycleOwner.lifecycle.addObserver(this)
+        }
+
         //TODO: Call this on resume
+        @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
         fun addLocationListener() {
             // Note: Use the Fused Location Provider from Google Play Services instead.
             // https://developers.google.com/android/reference/com/google/android/gms/location/FusedLocationProviderApi
@@ -55,6 +63,7 @@ object BoundLocationManager {
         }
 
         //TODO: Call this on pause
+        @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
         fun removeLocationListener() {
             if (mLocationManager == null) {
                 return
