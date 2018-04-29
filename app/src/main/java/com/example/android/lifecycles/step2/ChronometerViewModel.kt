@@ -14,15 +14,19 @@
  * limitations under the License.
  */
 
-package com.example.android.lifecycles.step5;
+package com.example.android.lifecycles.step2
 
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModel
 
 /**
- * A ViewModel used in step 5.
+ * A ViewModel used for the [ChronoActivity2].
  */
-public class SeekBarViewModel extends ViewModel {
+class ChronometerViewModel : ViewModel() {
 
-    public MutableLiveData<Integer> seekbarValue = new MutableLiveData<>();
+    var startTime: Long? = null
+        private set
+
+    fun setStartTime(startTime: Long) {
+        this.startTime = startTime
+    }
 }
